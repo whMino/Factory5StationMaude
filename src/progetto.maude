@@ -1,0 +1,75 @@
+mod TYPES is
+  sorts StationId PalletId ProductType .
+  
+  --- Definizione delle Stazioni
+  ops S1 S2 S3 S4 S5 : -> StationId .
+  
+  --- Definizione dei tipi di Prodotto
+  ops T1 T2 : -> ProductType .
+  
+  --- Identificatori di Pallet 
+  ops P1 P2 P3 P4 : -> PalletId .
+endm
+
+mod STATE is
+  sorts MachineState .
+
+  ops idle processing blocked fail unload : -> MachineState .
+endm
+
+mod PALLET is
+  protecting TYPES .
+  sort Pallet .
+
+  op p(_,_) : PalletId ProductType -> Pallet .
+endm
+
+mod BUFFER is
+  protecting PALLET .
+  sorts PalletList Buffer .
+  subsort Pallet < PalletList .
+
+  --- Operazioni sulla Lista
+  op empty : -> PalletList .
+  op __ : PalletList PalletList -> PalletList [assoc id: empty] .
+  op size : PalletList -> Nat .
+
+  --- Operazioni sul Buffer
+  op buffer(_,_) : PalletList Nat -> Buffer .
+  op content : Buffer -> PalletList .
+  op cap : Buffer -> Nat .
+  op isFull : Buffer -> Bool .
+  op isEmpty : Buffer -> Bool .
+
+  --- equazioni sulla Lista
+  eq size(empty) = 0 .
+  eq size(P:Pallet L:PalletList) = 1 + size(L:PalletList) .
+
+  --- equazioni sul Buffer
+  eq content(buffer(L:PalletList, C:Nat)) = L:PalletList .
+  eq cap(buffer(L:PalletList, C:Nat)) = C:Nat .
+  eq isFull(buffer(L:PalletList, C:Nat)) = (size(L:PalletList) == C:Nat) .
+  eq isEmpty(buffer(L:PalletList, C:Nat)) = (size(L:PalletList) == 0) .
+endm
+
+mod STATION is
+  protecting BUFFER .
+  sort Station .
+
+  op <_,_,_,_> : StationId MachineState Buffer Buffer -> Station .
+endm
+
+mod SYSTEM is
+  protecting STATION .
+  
+  sort Config .
+  subsorts Station Pallet < Config .
+
+  op none : -> Config .
+  op init : -> Config .
+  op __ : Config Config -> Config [assoc comm id: none] .
+ 
+  --- operazioni per la validazione
+  op validConfig : Config -> Bool .
+  op countPallets : Config -> Nat .
+endm
