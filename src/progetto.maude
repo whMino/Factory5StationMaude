@@ -1,3 +1,6 @@
+--- ==========================================
+--- 1. DEFINIZIONE TIPI E STATI
+--- ==========================================
 mod TYPES is
   sorts StationId PalletId ProductType .
   
@@ -24,6 +27,9 @@ mod PALLET is
   op p(_,_) : PalletId ProductType -> Pallet .
 endm
 
+--- ==========================================
+--- 2. GESTIONE BUFFER E LISTE
+--- ==========================================
 mod BUFFER is
   protecting PALLET .
   sorts PalletList Buffer .
@@ -52,6 +58,9 @@ mod BUFFER is
   eq isEmpty(buffer(L:PalletList, C:Nat)) = (size(L:PalletList) == 0) .
 endm
 
+--- ==========================================
+--- 3. DEFINIZIONE STAZIONE E SISTEMA
+--- ==========================================
 mod STATION is
   protecting BUFFER .
   sort Station .
@@ -72,4 +81,37 @@ mod SYSTEM is
   --- operazioni per la validazione
   op validConfig : Config -> Bool .
   op countPallets : Config -> Nat .
+
+  --- Altre Operazioni
+  --- Operazione per recuperare una stazione specifica tramite ID
+  op getStation : Config StationId -> [Station] .
+  --- Controllo Id duplicati
+  op noDuplicateStations : Config -> Bool .
+
+  vars C : Config .
+  vars S : StationId .
+  var MS : MachineState .
+  vars B1 B2 : Buffer .
+  var P : PalletId .
+  var T : ProductType .
+  var L : PalletList .
+  var N : Nat
+
+  --- Conta i pallet totali nel sistema
+  eq countPallets(none) = 0 .
+  eq countPallets(p(P, T) C) = 1 + countPallets(C) .
+  eq countPallets(< S, MS, B1, B2 > C) = size(content(B1)) + size(content(B2)) + countPallets(C) .
+
+  --- Definizione dello Stato Iniziale
+  eq init = < S1, idle, buffer(p(P1, T1) p(P2, T1), p(P3, T1), p(P4, T1), 5), buffer(empty, 5) >
+            < S2, idle, buffer(empty, 4), buffer(empty, 4) >
+            < S3, idle, buffer(empty, 5), buffer(empty, 5) >
+            < S4, idle, buffer(empty, 5), buffer(empty, 5) >
+            < S5, idle, buffer(empty, 4), buffer(empty, 4) >
+
+  eq getStation(< S, MS, B1, B2 > C, S) = < S, MS, B1, B2 > .
+
+  op noDuplicateStations : Config -> Bool .
+  eq noDuplicateStations(none) = true .
+  eq noDuplicateStations(< S, MS, B1, B2 > C) = (getStation(C, S) == (nil).Station) and noDuplicateStations(C) .
 endm
