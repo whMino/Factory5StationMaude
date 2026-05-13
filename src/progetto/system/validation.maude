@@ -1,0 +1,43 @@
+load ../system/config.maude
+
+mod VALIDATION is
+  protecting NAT .
+  protecting BOOL .
+  protecting CONFIG .
+
+  op validConfig : Config -> Bool .
+  op countPallets : Config -> Nat .
+  op getStation : Config StationId -> [Station] .
+  op noDuplicateStations : Config -> Bool .
+
+  vars C : Config .
+  vars S S1 S2 : StationId .
+  var MS : MachineState .
+  vars B1 B2 : Buffer .
+  var P : PalletId .
+  var T : ProductType .
+
+  eq validConfig(C) = noDuplicateStations(C) .
+
+  --- Conteggio pallet
+  eq countPallets(none) = 0 .
+  eq countPallets(p(P, T) C) = 1 + countPallets(C) .
+  eq countPallets(< S, MS, B1, B2 > C)
+    = size(content(B1)) + size(content(B2)) + countPallets(C) .
+
+  --- Recupero stazione
+  eq getStation((< S, MS, B1, B2 > C), S) = < S, MS, B1, B2 > .
+  
+  ceq getStation((< S1, MS, B1, B2 > C:Configuration), S2:StationId) = 
+      getStation(C:Configuration, S2:StationId) 
+      if S1 =/= S2 .
+
+  eq getStation(none, S) = (nil).Station .
+
+  --- Duplicati
+  eq noDuplicateStations(none) = true .
+
+  eq noDuplicateStations(< S, MS, B1, B2 > C)
+    = (getStation(C, S) == (nil).Station)
+      and noDuplicateStations(C) .
+endm

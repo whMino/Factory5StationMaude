@@ -1,0 +1,9 @@
+load ../types/types.maude
+
+mod PALLET is
+  protecting TYPES .
+
+  sort Pallet .
+
+  op p(_,_) : PalletId ProductType -> Pallet .
+endm

@@ -1,0 +1,3 @@
+load domain/station.maude
+load rules/processing.maude
+load rules/synchronization.maude

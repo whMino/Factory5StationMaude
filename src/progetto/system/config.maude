@@ -1,0 +1,12 @@
+load ../domain/station.maude
+
+mod CONFIG is
+  protecting STATION .
+
+  sort Config .
+
+  subsorts Station Pallet < Config .
+
+  op none : -> Config .
+  op __ : Config Config -> Config [assoc comm id: none] .
+endm

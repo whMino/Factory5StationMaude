@@ -1,0 +1,5 @@
+mod STATE is
+  sort MachineState .
+
+  ops idle processing blocked fail unload : -> MachineState .
+endm

@@ -1,0 +1,12 @@
+mod TYPES is
+  sorts StationId PalletId ProductType .
+
+  --- Definizione delle Stazioni
+  ops S1 S2 S3 S4 S5 : -> StationId .
+
+  --- Tipi di prodotto
+  ops T1 T2 : -> ProductType .
+
+  --- Identificatori pallet
+  ops P1 P2 P3 P4 : -> PalletId .
+endm

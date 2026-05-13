@@ -1,0 +1,45 @@
+load ../domain/pallet.maude
+
+mod BUFFER is
+  protecting NAT .
+  protecting BOOL .
+  protecting PALLET .
+
+  sorts PalletList Buffer .
+
+  subsort Pallet < PalletList .
+
+  --- Lista pallet
+  op empty : -> PalletList .
+  op _;_ : PalletList PalletList -> PalletList [assoc id: empty] .
+
+  --- Operazioni lista
+  op size : PalletList -> Nat .
+
+  --- Buffer
+  op buffer(_,_) : PalletList Nat -> Buffer .
+
+  --- Accessors
+  op content : Buffer -> PalletList .
+  op cap : Buffer -> Nat .
+
+  --- Controlli
+  op isFull : Buffer -> Bool .
+  op isEmpty : Buffer -> Bool .
+
+  vars L : PalletList .
+  vars C N : Nat .
+  var P : Pallet .
+
+  --- Size
+  eq size(empty) = 0 .
+  eq size(P ; L) = 1 + size(L) .
+
+  --- Accessors
+  eq content(buffer(L, C)) = L .
+  eq cap(buffer(L, C)) = C .
+
+  --- Stato buffer
+  eq isFull(buffer(L, C)) = (size(L) >= C) .
+  eq isEmpty(buffer(L, C)) = (size(L) == 0) .
+endm

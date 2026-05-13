@@ -1,0 +1,11 @@
+load ../domain/buffer.maude
+load ../types/state.maude
+
+mod STATION is
+  protecting BUFFER .
+  protecting STATE .
+
+  sort Station .
+
+  op <_,_,_,_> : StationId MachineState Buffer Buffer -> Station .
+endm
