@@ -7,7 +7,8 @@ mod VALIDATION is
 
   op validConfig : Config -> Bool .
   op countPallets : Config -> Nat .
-  op getStation : Config StationId -> [Station] .
+  op getStation : Config StationId -> Station .
+  op noneStation : -> Station [ctor] . 
   op noDuplicateStations : Config -> Bool .
 
   vars C : Config .
@@ -26,18 +27,14 @@ mod VALIDATION is
     = size(content(B1)) + size(content(B2)) + countPallets(C) .
 
   --- Recupero stazione
-  eq getStation((< S, MS, B1, B2 > C), S) = < S, MS, B1, B2 > .
-  
-  ceq getStation((< S1, MS, B1, B2 > C:Configuration), S2:StationId) = 
-      getStation(C:Configuration, S2:StationId) 
-      if S1 =/= S2 .
-
-  eq getStation(none, S) = (nil).Station .
+  eq getStation(none, S) = noneStation .
+  eq getStation(< S:StationId, MS, B1, B2 > C, S:StationId) = < S, MS, B1, B2 > .
+  eq getStation(< S1:StationId, MS, B1, B2 > C, S:StationId) = getStation(C, S) [owise] .
 
   --- Duplicati
   eq noDuplicateStations(none) = true .
 
   eq noDuplicateStations(< S, MS, B1, B2 > C)
-    = (getStation(C, S) == (nil).Station)
+    = (getStation(C, S) == noneStation)
       and noDuplicateStations(C) .
 endm

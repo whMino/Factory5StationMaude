@@ -8,5 +8,5 @@ mod CONFIG is
   subsorts Station Pallet < Config .
 
   op none : -> Config .
-  op __ : Config Config -> Config [assoc comm id: none] .
+  op __ : Config Config -> Config [assoc id: none] .
 endm
