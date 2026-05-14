@@ -1,0 +1,43 @@
+mod PROCESSING is
+  protecting INIT .
+
+  vars S : StationId .
+  vars BIn BOut : Buffer .
+  vars L : PalletList .
+  vars C1 C2 : Nat .
+  vars PID : PalletId .
+  vars T : ProductType .
+
+  --- Avvio lavorazione
+  rl [start-processing] :
+    < S,
+      idle,
+      buffer(p(PID, T) ; L, C1),
+      BOut >
+    =>
+    < S,
+      processing,
+      buffer(L, C1),
+      BOut > .
+
+
+  --- Fine lavorazione
+  crl [finish-processing] :
+    < S, processing, BIn, buffer(p(PID, T) ; L, C2) >
+    =>
+    < S, unload, BIn, buffer(L, C2) >
+    if size(L) < C2 .
+
+
+  --- Torna idle dopo scarico
+  rl [back-idle] :
+    < S,
+      unload,
+      BIn,
+      BOut >
+    =>
+    < S,
+      idle,
+      BIn,
+      BOut > .
+endm
