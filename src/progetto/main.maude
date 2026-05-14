@@ -1,3 +1,17 @@
+load types/types.maude
+load types/state.maude
+
+load domain/pallet.maude
+load domain/buffer.maude
 load domain/station.maude
+
+load system/config.maude
+load system/validation.maude
+load system/init.maude
+
 load rules/processing.maude
+load rules/transport.maude
+load rules/failures.maude
+load rules/recovery.maude
 load rules/synchronization.maude
+load rules/transitions.maude

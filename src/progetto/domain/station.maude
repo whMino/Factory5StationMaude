@@ -1,6 +1,3 @@
-load ../domain/buffer.maude
-load ../types/state.maude
-
 mod STATION is
   protecting BUFFER .
   protecting STATE .

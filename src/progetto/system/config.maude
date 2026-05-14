@@ -1,5 +1,3 @@
-load ../domain/station.maude
-
 mod CONFIG is
   protecting STATION .
 
