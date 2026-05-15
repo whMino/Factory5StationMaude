@@ -1,0 +1,31 @@
+mod TRANSITIONS is
+  protecting STATE .
+  protecting TYPES .
+
+  vars S S' : State .
+  vars P : Pallet .
+  vars B : Buffer .
+  vars St : Station .
+  vars SId : StationId .
+
+  --- sincronizzazione tra due stazioni
+  --- La stazione S2 può iniziare a processare solo se S1 è in stato unload
+  crl [sync-S1-S2] :
+    < S1:StationId, unload, BIn1, BOut1 >
+    < S2:StationId, idle, BIn2, BOut2 >
+    =>
+    < S1:StationId, unload, BIn1, BOut1 >
+    < S2:StationId, processing, BIn2, BOut2 >
+    if true .
+  --- verificherò il funzionamento e implementerò la regola per tutte le stazioni in successione
+
+
+  --- tutte le stazioni tornano idle dopo un evento globale 
+  rl [reset-all-idle] :
+    < SId, fail, BIn, BOut > => < SId, idle, BIn, BOut > .
+
+  --- sblocco di tutte le stazioni bloccate
+  rl [unblock-all] :
+    < SId, blocked, BIn, BOut > => < SId, idle, BIn, BOut > .
+
+endm

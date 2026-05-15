@@ -10,10 +10,8 @@ load system/validation.maude
 load system/init.maude
 
 load rules/processing.maude
-
---- possibili moduli di sistema da implementare
---- load rules/transport.maude
---- load rules/failures.maude
---- load rules/recovery.maude
---- load rules/synchronization.maude
---- load rules/transitions.maude
+load rules/transport.maude
+load rules/failures.maude
+load rules/recovery.maude
+load rules/synchronization.maude
+load rules/transitions.maude

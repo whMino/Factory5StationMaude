@@ -10,15 +10,9 @@ mod PROCESSING is
 
   --- Avvio lavorazione
   rl [start-processing] :
-    < S,
-      idle,
-      buffer(p(PID, T) ; L, C1),
-      BOut >
+    < S, idle, buffer(p(PID, T) ; L, C1), BOut >
     =>
-    < S,
-      processing,
-      buffer(L, C1),
-      BOut > .
+    < S, processing, buffer(L, C1), BOut > .
 
 
   --- Fine lavorazione
@@ -28,16 +22,9 @@ mod PROCESSING is
     < S, unload, BIn, buffer(L, C2) >
     if size(L) < C2 .
 
-
   --- Torna idle dopo scarico
   rl [back-idle] :
-    < S,
-      unload,
-      BIn,
-      BOut >
+    < S, unload, BIn, BOut >
     =>
-    < S,
-      idle,
-      BIn,
-      BOut > .
+    < S, idle, BIn, BOut > .
 endm

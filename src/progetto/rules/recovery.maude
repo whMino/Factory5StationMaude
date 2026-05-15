@@ -1,0 +1,18 @@
+mod RECOVERY is
+  protecting INIT .
+  
+  vars S : StationId .
+  vars B1 B2 : Buffer .
+
+  --- Ripristino macchina
+  rl [repair-machine] :
+    < S, fail, B1, B2 >
+    =>
+    < S, idle, B1, B2 > .
+
+  --- Sblocco macchina
+  rl [unblock-machine] :
+    < S, blocked, B1, B2 >
+    =>
+    < S, idle, B1, B2 > .
+endm

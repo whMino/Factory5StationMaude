@@ -1,0 +1,20 @@
+mod TRANSPORT is
+  protecting PROCESSING .
+
+  vars S1 S2 : StationId .
+  vars MS1 MS2 : MachineState .
+  vars Bin1 Bout1 Bin2 Bout2 : Buffer .
+  vars L1 L2 : PalletList .
+  vars C1 C2 : Nat .
+  vars PID : PalletId .
+  vars T : ProductType .
+
+  --- Trasferimento pallet da una stazione all'altra
+  crl [move-pallet] :
+    < S1:StationId, MS1, Bin1,buffer(p(PID, T) ; L1, C1) >
+    < S2:StationId, MS2, buffer(L2, C2), Bout2 >
+    =>
+    < S1:StationId, MS1, Bin1, buffer(L1, C1) >
+    < S2:StationId, MS2, buffer(L2 ; p(PID, T), C2), Bout2 >
+    if size(L2) < C2 .
+endm

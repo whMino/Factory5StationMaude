@@ -1,0 +1,19 @@
+mod FAILURES is
+  protecting TRANSPORT .
+
+  vars S : StationId .
+  vars B1 B2 : Buffer .
+
+  --- Guasto macchina
+  rl [machine-failure] :
+    < S, processing, B1, B2 >
+    =>
+    < S, fail, B1, B2 > .
+
+  --- Blocco per buffer pieno
+  crl [blocked-output] :
+    < S, processing, B1, B2 >
+    =>
+    < S, blocked, B1, B2 >
+    if isFull(B2) .
+endm

@@ -1,0 +1,13 @@
+mod SYNCHRONIZATION is
+  protecting RECOVERY .
+
+  vars S : StationId .
+  vars B1 B2 : Buffer .
+
+  --- Una stazione non può iniziare se output pieno
+  crl [cannot-start-if-output-full] :
+    < S, idle, B1, B2 >
+    =>
+    < S, blocked, B1, B2 >
+    if isFull(B2) .
+endm
