@@ -1,17 +1,26 @@
+--- Carico i tipi ---
 load types/types.maude
 load types/state.maude
 
+--- Carico i domini ---
 load domain/pallet.maude
 load domain/buffer.maude
 load domain/station.maude
 
+--- Carico il sistema ---
 load system/config.maude
 load system/validation.maude
 load system/init.maude
 
+--- Carico le regole di riscrittura ---
 load rules/processing.maude
 load rules/transport.maude
 load rules/failures.maude
 load rules/recovery.maude
 load rules/synchronization.maude
 load rules/transitions.maude
+
+--- Carico le verifiche formali ---
+load formalChecks/deadlock.maude
+load formalChecks/conservation.maude
+load formalChecks/no-overflow.maude

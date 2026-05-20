@@ -4,7 +4,7 @@ mod SYNCHRONIZATION is
   vars S : StationId .
   vars B1 B2 : Buffer .
 
-  --- Una stazione non può iniziare se output pieno
+  --- una stazione non può iniziare se output pieno
   crl [cannot-start-if-output-full] :
     < S, idle, B1, B2 >
     =>

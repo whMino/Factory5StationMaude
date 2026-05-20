@@ -8,21 +8,20 @@ mod PROCESSING is
   vars PID : PalletId .
   vars T : ProductType .
 
-  --- Avvio lavorazione
+  --- avvio lavorazione
   rl [start-processing] :
     < S, idle, buffer(p(PID, T) ; L, C1), BOut >
     =>
     < S, processing, buffer(L, C1), BOut > .
 
-
-  --- Fine lavorazione
+  --- fine lavorazione
   crl [finish-processing] :
     < S, processing, BIn, buffer(p(PID, T) ; L, C2) >
     =>
     < S, unload, BIn, buffer(L, C2) >
     if size(L) < C2 .
 
-  --- Torna idle dopo scarico
+  --- torna idle dopo scarico
   rl [back-idle] :
     < S, unload, BIn, BOut >
     =>

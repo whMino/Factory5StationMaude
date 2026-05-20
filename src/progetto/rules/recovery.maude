@@ -4,13 +4,13 @@ mod RECOVERY is
   vars S : StationId .
   vars B1 B2 : Buffer .
 
-  --- Ripristino macchina
+  --- ripristino macchina
   rl [repair-machine] :
     < S, fail, B1, B2 >
     =>
     < S, idle, B1, B2 > .
 
-  --- Sblocco macchina
+  --- sblocco macchina
   rl [unblock-machine] :
     < S, blocked, B1, B2 >
     =>

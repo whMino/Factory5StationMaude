@@ -9,7 +9,7 @@ mod TRANSITIONS is
   vars SId : StationId .
 
   --- sincronizzazione tra due stazioni
-  --- La stazione S2 può iniziare a processare solo se S1 è in stato unload
+  --- la stazione S2 può iniziare a processare solo se S1 è in stato unload
   crl [sync-S1-S2] :
     < S1:StationId, unload, BIn1, BOut1 >
     < S2:StationId, idle, BIn2, BOut2 >

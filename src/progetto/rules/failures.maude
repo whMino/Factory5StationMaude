@@ -4,13 +4,13 @@ mod FAILURES is
   vars S : StationId .
   vars B1 B2 : Buffer .
 
-  --- Guasto macchina
+  --- guasto macchina
   rl [machine-failure] :
     < S, processing, B1, B2 >
     =>
     < S, fail, B1, B2 > .
 
-  --- Blocco per buffer pieno
+  --- blocco per buffer pieno
   crl [blocked-output] :
     < S, processing, B1, B2 >
     =>

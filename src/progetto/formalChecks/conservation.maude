@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------------------------------
+--- Modulo per verificare che il numero di Pallet rimane invariato in ogni fase dell'esecuzione ---
+---------------------------------------------------------------------------------------------------
+
+mod CONSERVATION is
+  protecting CONFIG .
+  protecting VALIDATION .
+
+  op checkConservation : Config Config -> Bool .
+  vars Cinit Cfinal : Config .
+
+  eq checkConservation(Cinit, Cfinal) = (countPallets(Cinit) == countPallets(Cfinal)) .
+
+endm

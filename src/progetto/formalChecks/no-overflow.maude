@@ -1,0 +1,26 @@
+--------------------------------------------------------------
+--- Modulo per verificare l'assenza di overflow nei Buffer ---
+--------------------------------------------------------------
+
+mod NO-OVERFLOW is
+  protecting CONFIG .
+  protecting TYPES .
+
+  op checkNoOverflow : Config -> Bool .
+
+  vars C : Config .
+  var S : StationId .
+  var MS : MachineState .
+  vars B1 B2 : Buffer .
+
+  --- funzione ausiliaria
+  op bufferNoOverflow : Buffer -> Bool .
+  var B : Buffer .
+  eq bufferNoOverflow(B) = size(content(B)) <= capacity(B) .
+
+  --- controllo che nessun buffer in una configurazione sia in overflow
+  eq checkNoOverflow(none) = true .
+  eq checkNoOverflow(< S, MS, B1, B2 > C) =
+    bufferNoOverflow(B1) and bufferNoOverflow(B2) and checkNoOverflow(C) .
+
+endm
