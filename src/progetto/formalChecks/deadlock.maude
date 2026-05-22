@@ -25,6 +25,42 @@ mod DEADLOCK is
   var PID : PalletId .
   var T : ProductType .
 
-  --- implementare le operazioni
-  
+
+  --- Passi locali disponibili in una singola stazione
+  eq hasLocalStep(< SId, idle, BIn, BOut >) = not isEmpty(BIn) .
+  eq hasLocalStep(< SId, processing, BIn, BOut >)
+    = (not isEmpty(BOut)) and (not isFull(BOut)) .
+  eq hasLocalStep(< SId, unload, BIn, BOut >) = true .
+  eq hasLocalStep(< SId, fail, BIn, BOut >) = true .
+  eq hasLocalStep(< SId, blocked, BIn, BOut >) = true .
+
+  --- esiste un passo di trasporto tra due stazioni
+  eq existsTransportFrom(< SId1, MS1, BIn1, BOut1 >, none) = false .
+
+  eq existsTransportFrom(
+       < SId1, MS1, BIn1, buffer(p(PID, T) ; L1, C1) >,
+       < SId2, MS2, buffer(L2, C2), BOut2 > C)
+    = (size(L2) < C2)
+      or existsTransportFrom(
+           < SId1, MS1, BIn1, buffer(p(PID, T) ; L1, C1) >,
+           C) .
+
+  eq existsTransportFrom(< SId1, MS1, BIn1, BOut1 >, < SId2, MS2, BIn2, BOut2 > C)
+    = existsTransportFrom(< SId1, MS1, BIn1, BOut1 >, C) [owise] .
+
+  eq transportEnabled(none) = false .
+  eq transportEnabled(< SId, MS, BIn, BOut > C)
+    = existsTransportFrom(< SId, MS, BIn, BOut >, C)
+      or transportEnabled(C) .
+
+  eq hasEnabled(none) = false .
+  eq hasEnabled(< SId, MS, BIn, BOut > C)
+    = hasLocalStep(< SId, MS, BIn, BOut >)
+      or transportEnabled(< SId, MS, BIn, BOut > C)
+      or hasEnabled(C) .
+
+  eq isDeadlock(C) = not hasEnabled(C) .
+
+  crl [is-deadlock] : check(C) => deadlock if isDeadlock(C) .
+  crl [not-deadlock] : check(C) => ok if not isDeadlock(C) .
 endm
