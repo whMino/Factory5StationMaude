@@ -6,33 +6,33 @@ mod VALIDATION is
   op validConfig : Config -> Bool .
   op countPallets : Config -> Nat .
   op getStation : Config StationId -> Station .
-  op noneStation : -> Station [ctor] . 
+  op noneStation : -> Station [ctor] .
   op noDuplicateStations : Config -> Bool .
 
-  vars C : Config .
+  vars CF : Config .
   vars S S1 S2 : StationId .
   var MS : MachineState .
   vars B1 B2 : Buffer .
-  var P : PalletId .
+  var PID : PalletId .
   var T : ProductType .
 
-  eq validConfig(C) = noDuplicateStations(C) .
+  eq validConfig(CF) = noDuplicateStations(CF) .
 
   --- Conteggio pallet
   eq countPallets(none) = 0 .
-  eq countPallets(p(P, T) C) = 1 + countPallets(C) .
-  eq countPallets(< S, MS, B1, B2 > C)
-    = size(content(B1)) + size(content(B2)) + countPallets(C) .
+  eq countPallets(p(PID, T) CF) = 1 + countPallets(CF) .
+  eq countPallets(< S, MS, B1, B2 > CF)
+    = size(content(B1)) + size(content(B2)) + countPallets(CF) .
 
   --- Recupero stazione
   eq getStation(none, S) = noneStation .
-  eq getStation(< S:StationId, MS, B1, B2 > C, S:StationId) = < S, MS, B1, B2 > .
-  eq getStation(< S1:StationId, MS, B1, B2 > C, S:StationId) = getStation(C, S) [owise] .
+  eq getStation(< S:StationId, MS, B1, B2 > CF, S:StationId) = < S:StationId, MS, B1, B2 > .
+  eq getStation(< S1:StationId, MS, B1, B2 > CF, S:StationId)
+    = getStation(CF, S) [owise] .
 
   --- Duplicati
   eq noDuplicateStations(none) = true .
-
-  eq noDuplicateStations(< S, MS, B1, B2 > C)
-    = (getStation(C, S) == noneStation)
-      and noDuplicateStations(C) .
+  eq noDuplicateStations(< S, MS, B1, B2 > CF)
+    = (getStation(CF, S) == noneStation)
+      and noDuplicateStations(CF) .
 endm

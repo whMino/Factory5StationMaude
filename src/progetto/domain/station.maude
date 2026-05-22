@@ -1,6 +1,7 @@
 mod STATION is
-  protecting BUFFER .
   protecting STATE .
+  protecting TYPES .
+  protecting BUFFER .
 
   sort Station .
 

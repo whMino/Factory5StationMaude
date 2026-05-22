@@ -3,25 +3,28 @@
 ------------------------------------------------------------------------------
 
 mod DEADLOCK is
-	protecting INIT .
+  protecting INIT .
 
-	sort Check .
-	ops check deadlock ok : Config -> Check .
+  sort Check .
+  op check : Config -> Check .
+  op deadlock : -> Check .
+  op ok : -> Check .
 
-	op isDeadlock : Config -> Bool .
-	op hasEnabled : Config -> Bool .
-	op hasLocalStep : Station -> Bool .
-	op transportEnabled : Config -> Bool .
-	op existsTransportFrom : Station Config -> Bool .
+  op isDeadlock : Config -> Bool .
+  op hasEnabled : Config -> Bool .
+  op hasLocalStep : Station -> Bool .
+  op transportEnabled : Config -> Bool .
+  op existsTransportFrom : Station Config -> Bool .
 
-	vars C : Config .
-	vars S S1 S2 : StationId .
-	vars MS MS1 MS2 : MachineState .
-	vars BIn BOut BIn1 BOut1 BIn2 BOut2 : Buffer .
-	vars L1 L2 : PalletList .
-	vars C1 C2 : Nat .
-	vars PID : PalletId .
-	vars T : ProductType .
+  var C : Config .
+  vars SId SId1 SId2 : StationId .
+  vars MS MS1 MS2 : MachineState .
+  vars BIn BOut BIn1 BOut1 BIn2 BOut2 : Buffer .
+  vars L1 L2 : PalletList .
+  vars C1 C2 : Nat .
+  var PID : PalletId .
+  var T : ProductType .
 
-	--- implementare le operazioni
+  --- implementare le operazioni
+  
 endm

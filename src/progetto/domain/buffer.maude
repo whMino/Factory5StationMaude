@@ -38,6 +38,7 @@ mod BUFFER is
   eq cap(buffer(L, C)) = C .
 
   --- Stato buffer
-  eq isFull(buffer(L, C)) = (size(L) >= C) .
+  --- isFull: size(L) >= C  <==>  C <= size(L)
+  eq isFull(buffer(L, C)) = (C <= size(L)) .
   eq isEmpty(buffer(L, C)) = (size(L) == 0) .
 endm

@@ -10,5 +10,4 @@ mod CONSERVATION is
   vars Cinit Cfinal : Config .
 
   eq checkConservation(Cinit, Cfinal) = (countPallets(Cinit) == countPallets(Cfinal)) .
-
 endm
