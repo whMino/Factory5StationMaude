@@ -1,3 +1,8 @@
+------------------------------------------------------------------------
+--- Modulo che definisce i guasti del sistema: interruzione per      ---
+--- failure della macchina e blocco per buffer di output saturo      ---
+------------------------------------------------------------------------
+
 mod FAILURES is
   protecting TRANSPORT .
 

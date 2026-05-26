@@ -1,3 +1,8 @@
+---------------------------------------------------------------------------
+--- Modulo che definisce la Configurazione globale del sistema come     ---
+--- insieme di stazioni e pallet, con operatore associativo-commutativo ---
+---------------------------------------------------------------------------
+
 mod CONFIG is
   protecting STATION .
   protecting PALLET .

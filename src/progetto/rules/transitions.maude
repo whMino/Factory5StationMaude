@@ -1,3 +1,9 @@
+-------------------------------------------------------------------------
+--- Modulo che definisce transizioni aggiuntive di sistema: avvio     ---
+--- sincronizzato tra stazioni, reset globale da fail e sblocco       ---
+--- globale da blocked                                                ---
+-------------------------------------------------------------------------
+
 mod TRANSITIONS is
   protecting STATE .
   protecting TYPES .

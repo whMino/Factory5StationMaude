@@ -1,3 +1,8 @@
+------------------------------------------------------------------------
+--- Modulo che definisce le regole di lavorazione locale di una      ---
+--- stazione: avvio, completamento e ritorno allo stato idle         ---
+------------------------------------------------------------------------
+
 mod PROCESSING is
   protecting INIT .
 

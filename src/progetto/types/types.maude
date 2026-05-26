@@ -1,3 +1,8 @@
+-----------------------------------------------------------------------
+--- Modulo che definisce i tipi base del sistema: identificatori    ---
+--- delle stazioni, dei pallet e i tipi di prodotto lavorato        ---
+-----------------------------------------------------------------------
+
 mod TYPES is
   sorts StationId PalletId ProductType .
 

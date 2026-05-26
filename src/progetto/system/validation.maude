@@ -1,3 +1,9 @@
+---------------------------------------------------------------------------
+--- Modulo che fornisce funzioni di validazione sulla configurazione:   ---
+--- conteggio pallet, recupero stazione per id, assenza di stazioni     ---
+--- duplicate                                                           ---
+---------------------------------------------------------------------------
+
 mod VALIDATION is
   protecting NAT .
   protecting BOOL .

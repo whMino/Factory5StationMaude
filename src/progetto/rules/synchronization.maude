@@ -1,3 +1,9 @@
+--------------------------------------------------------------------------
+--- Modulo che modella il vincolo di sincronizzazione: una stazione    ---
+--- non può avviare la lavorazione se il proprio buffer di output      ---
+--- è pieno, transitando nello stato blocked                           ---
+--------------------------------------------------------------------------
+
 mod SYNCHRONIZATION is
   protecting RECOVERY .
 

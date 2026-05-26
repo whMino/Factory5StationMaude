@@ -1,3 +1,9 @@
+-------------------------------------------------------------------------
+--- Modulo che definisce la regola di trasporto dei pallet tra due    ---
+--- stazioni, condizionata alla disponibilità di spazio nel buffer    ---
+--- di ingresso della stazione destinataria                           ---
+-------------------------------------------------------------------------
+
 mod TRANSPORT is
   protecting PROCESSING .
 

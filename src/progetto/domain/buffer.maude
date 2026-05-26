@@ -1,3 +1,8 @@
+---------------------------------------------------------------------------
+--- Modulo che definisce la struttura del Buffer e le operazioni        ---
+--- su liste di pallet: dimensione, capacità, controllo pieno/vuoto     ---
+---------------------------------------------------------------------------
+
 mod BUFFER is
   protecting NAT .
   protecting BOOL .

@@ -1,3 +1,9 @@
+----------------------------------------------------------------------------
+--- Modulo che definisce la struttura di una Stazione, composta da      ---
+--- un identificatore, uno stato macchina, un buffer in ingresso        ---
+--- e uno in uscita                                                      ---
+----------------------------------------------------------------------------
+
 mod STATION is
   protecting STATE .
   protecting TYPES .

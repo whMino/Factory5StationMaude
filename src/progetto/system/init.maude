@@ -1,3 +1,7 @@
+-------------------------------------------------------------------
+--- Modulo che definisce la configurazione iniziale del sistema ---
+-------------------------------------------------------------------
+
 mod INIT is
   protecting VALIDATION .
 

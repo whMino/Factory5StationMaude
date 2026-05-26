@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------
+--- Modulo che definisce le regole di ripristino del sistema:       ---
+--- riparazione di una macchina in fail e sblocco di una macchina   ---
+--- in stato blocked                                                ---
+-----------------------------------------------------------------------
+
 mod RECOVERY is
   protecting INIT .
 

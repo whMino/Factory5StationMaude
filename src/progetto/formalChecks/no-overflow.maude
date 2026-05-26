@@ -1,6 +1,7 @@
---------------------------------------------------------------
---- Modulo per verificare l'assenza di overflow nei Buffer ---
---------------------------------------------------------------
+---------------------------------------------------------------------------
+--- Modulo per verificare che nessun buffer del sistema superi mai      ---
+--- la propria capacità massima in nessuna configurazione raggiungibile ---
+---------------------------------------------------------------------------
 
 mod NO-OVERFLOW is
   protecting CONFIG .
