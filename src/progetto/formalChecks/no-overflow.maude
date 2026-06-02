@@ -4,6 +4,7 @@
 ---------------------------------------------------------------------------
 
 mod NO-OVERFLOW is
+  protecting SYSTEM .
   protecting CONFIG .
   protecting TYPES .
 
@@ -15,10 +16,8 @@ mod NO-OVERFLOW is
   var MS : MachineState .
   vars B1 B2 B : Buffer .
 
-  --- funzione ausiliaria: usa cap (getter definito in BUFFER)
   eq bufferNoOverflow(B) = size(content(B)) <= cap(B) .
 
-  --- controllo che nessun buffer in una configurazione sia in overflow
   eq checkNoOverflow(none) = true .
   eq checkNoOverflow(< SId, MS, B1, B2 > CF) =
     bufferNoOverflow(B1) and bufferNoOverflow(B2) and checkNoOverflow(CF) .

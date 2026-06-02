@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------------------------------
+--- Modulo per verificare che il numero di Pallet rimane invariato in ogni fase dell'esecuzione ---
+---------------------------------------------------------------------------------------------------
+
+mod CONSERVATION is
+  protecting TRANSPORT .  
+  protecting VALIDATION .
+
+  op totalPallets : Config -> Nat .
+  eq totalPallets(C:Config) = countPallets(C:Config) .
+
+  --- numero di pallet nel sistema
+  op expectedPallets : -> Nat .
+  eq expectedPallets = 4 .
+
+  --- invariante: il numero di pallet non deve mai essere diverso dai pallet iniziali
+  op conservationViolated : Config -> Bool .
+  eq conservationViolated(C:Config) =
+    (countPallets(C:Config) =/= expectedPallets) .
+endm

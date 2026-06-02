@@ -13,16 +13,18 @@ mod TRANSITIONS is
 
   vars SId1 SId2 SId : StationId .
   vars BIn1 BOut1 BIn2 BOut2 BIn BOut : Buffer .
+  vars L1 L2 : PalletList .
+  vars C1 C2 : Nat .
+  var PID : PalletId .
+  var T : ProductType .
 
+  --- sync: S1 in unload triggera avvio di S2, solo se c'è pallet e spazio
   crl [sync-S1-S2] :
-    < SId1, unload, BIn1, BOut1 > < SId2, idle, BIn2, BOut2 >
+    < SId1, unload, BIn1, BOut1 >
+    < SId2, idle, buffer(p(PID, T) ; L1, C1), buffer(L2, C2) >
     =>
-    < SId1, unload, BIn1, BOut1 > < SId2, processing, BIn2, BOut2 >
-    if true .
+    < SId1, unload, BIn1, BOut1 >
+    < SId2, processing, buffer(L1, C1), buffer(p(PID, T) ; L2, C2) >
+    if size(L2) < C2 .
 
-  rl [reset-all-idle] :
-    < SId, fail, BIn, BOut > => < SId, idle, BIn, BOut > .
-
-  rl [unblock-all] :
-    < SId, blocked, BIn, BOut > => < SId, idle, BIn, BOut > .
 endm

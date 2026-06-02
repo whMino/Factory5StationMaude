@@ -13,18 +13,19 @@ mod PROCESSING is
   var PID : PalletId .
   var T : ProductType .
 
-  --- avvio lavorazione
-  rl [start-processing] :
-    < SId, idle, buffer(p(PID, T) ; L, C1), BOut >
+  --- avvio lavorazione: sposta pallet da BIn a BOut atomicamente
+  crl [start-processing] :
+    < SId, idle, buffer(p(PID, T) ; L, C1), buffer(L2, C2) >
     =>
-    < SId, processing, buffer(L, C1), BOut > .
-
-  --- fine lavorazione: sposta pallet lavorato nel buffer di output
-  crl [finish-processing] :
-    < SId, processing, buffer(p(PID, T) ; L, C1), buffer(L2, C2) >
-    =>
-    < SId, unload, buffer(L, C1), buffer(p(PID, T) ; L2, C2) >
+    < SId, processing, buffer(L, C1), buffer(p(PID, T) ; L2, C2) >
     if size(L2) < C2 .
+
+  --- fine lavorazione: transizione a unload, solo se BOut non è vuoto
+  crl [finish-processing] :
+    < SId, processing, BIn, BOut >
+    =>
+    < SId, unload, BIn, BOut >
+    if not isEmpty(BOut) .
 
   --- torna idle dopo scarico
   rl [back-idle] :

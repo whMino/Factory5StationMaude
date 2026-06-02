@@ -12,6 +12,7 @@ load system/config.maude
 load system/validation.maude
 load system/init.maude
 
+
 --- Carico le regole di riscrittura ---
 load rules/processing.maude
 load rules/transport.maude
@@ -19,6 +20,11 @@ load rules/failures.maude
 load rules/recovery.maude
 load rules/synchronization.maude
 load rules/transitions.maude
+
+load system/system.maude
+
+--- Carico il model-check di maude
+load model-checker.maude
 
 --- Carico le verifiche formali ---
 load formalChecks/deadlock.maude

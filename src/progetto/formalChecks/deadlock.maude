@@ -2,6 +2,12 @@
 --- Modulo per verificare che il sistema non vada mai in stato di Deadlock ---
 ------------------------------------------------------------------------------
 
+--- verifiche con:                                     ---
+--- reduce in DEADLOCK : isDeadlock(init) .            ---
+--- search[1] in DEADLOCK : check(init) =>* deadlock . ---
+--- search[1] in DEADLOCK : check(init) =>* ok .       ---
+
+
 mod DEADLOCK is
   protecting INIT .
 

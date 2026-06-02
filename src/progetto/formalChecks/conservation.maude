@@ -1,13 +1,24 @@
----------------------------------------------------------------------------------------------------
---- Modulo per verificare che il numero di Pallet rimane invariato in ogni fase dell'esecuzione ---
----------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+--- Modulo per verificare che il numero di Pallet rimane invariato in ogni stato ---
+------------------------------------------------------------------------------------
+
+--- verifica con 'red in CONSERVATION : modelCheck(init, [] conserved) .' ---
+
+mod CONSERVATION-PREDS is
+  protecting SYSTEM .
+  protecting VALIDATION .
+  including SATISFACTION .
+
+  subsort Config < State .
+
+  op conserved : -> Prop .
+
+  var C : Config .
+  eq C |= conserved = (countPallets(C) == 4) .
+endm
 
 mod CONSERVATION is
-  protecting CONFIG .
-  protecting VALIDATION .
-
-  op checkConservation : Config Config -> Bool .
-  vars Cinit Cfinal : Config .
-
-  eq checkConservation(Cinit, Cfinal) = (countPallets(Cinit) == countPallets(Cfinal)) .
+  protecting CONSERVATION-PREDS .
+  including MODEL-CHECKER .
+  including LTL-SIMPLIFIER .
 endm

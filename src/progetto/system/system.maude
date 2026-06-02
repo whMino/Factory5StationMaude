@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------
+--- Modulo che aggrega tutte le regole del sistema per consentire     ---
+--- la verifica formale tramite search sull'intero spazio degli stati ---
+-------------------------------------------------------------------------
+
+mod SYSTEM is
+  protecting SYNCHRONIZATION .
+  protecting TRANSITIONS .
+  protecting RECOVERY .
+  protecting FAILURES .
+  protecting TRANSPORT .
+  protecting PROCESSING .
+  protecting INIT .
+endm

@@ -24,19 +24,16 @@ mod VALIDATION is
 
   eq validConfig(CF) = noDuplicateStations(CF) .
 
-  --- Conteggio pallet
   eq countPallets(none) = 0 .
   eq countPallets(p(PID, T) CF) = 1 + countPallets(CF) .
   eq countPallets(< S, MS, B1, B2 > CF)
     = size(content(B1)) + size(content(B2)) + countPallets(CF) .
 
-  --- Recupero stazione
   eq getStation(none, S) = noneStation .
   eq getStation(< S:StationId, MS, B1, B2 > CF, S:StationId) = < S:StationId, MS, B1, B2 > .
   eq getStation(< S1:StationId, MS, B1, B2 > CF, S:StationId)
     = getStation(CF, S) [owise] .
 
-  --- Duplicati
   eq noDuplicateStations(none) = true .
   eq noDuplicateStations(< S, MS, B1, B2 > CF)
     = (getStation(CF, S) == noneStation)
