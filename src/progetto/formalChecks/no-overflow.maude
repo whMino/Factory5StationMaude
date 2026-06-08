@@ -1,24 +1,41 @@
 ---------------------------------------------------------------------------
 --- Modulo per verificare che nessun buffer del sistema superi mai      ---
---- la propria capacità massima in nessuna configurazione raggiungibile ---
+--- la propria capacità massima in nessuno stato raggiungibile          ---
 ---------------------------------------------------------------------------
 
-mod NO-OVERFLOW is
+mod NO-OVERFLOW-VER is
   protecting SYSTEM .
-  protecting CONFIG .
-  protecting TYPES .
+  protecting VALIDATION .
+  including SATISFACTION .
 
-  op checkNoOverflow : Config -> Bool .
-  op bufferNoOverflow : Buffer -> Bool .
+  subsort Config < State .
 
-  var CF : Config .
+  --- funzioni di controllo overflow sui buffer
+  op bufferOk : Buffer -> Bool .
+  op allBuffersOk : Config -> Bool .
+
+  vars B1 B2 : Buffer .
   var SId : StationId .
   var MS : MachineState .
-  vars B1 B2 B : Buffer .
+  var CF : Config .
 
-  eq bufferNoOverflow(B) = size(content(B)) <= cap(B) .
+  --- un buffer è ok se il numero di pallet non supera la capacità
+  eq bufferOk(B1) = size(content(B1)) <= cap(B1) .
 
-  eq checkNoOverflow(none) = true .
-  eq checkNoOverflow(< SId, MS, B1, B2 > CF) =
-    bufferNoOverflow(B1) and bufferNoOverflow(B2) and checkNoOverflow(CF) .
+  --- tutti i buffer di tutta la Config sono ok
+  eq allBuffersOk(none) = true .
+  eq allBuffersOk(< SId, MS, B1, B2 > CF) =
+    bufferOk(B1) and bufferOk(B2) and allBuffersOk(CF) .
+
+  --- proposizione atomica LTL: nessun buffer è in overflow
+  op noOverflow : -> Prop .
+
+  var C : Config .
+  eq C |= noOverflow = allBuffersOk(C) .
+endm
+
+mod NO-OVERFLOW is 
+  including NO-OVERFLOW-VER .
+  including MODEL-CHECKER .
+  including LTL-SIMPLIFIER .
 endm

@@ -30,3 +30,4 @@ load model-checker.maude
 load formalChecks/deadlock.maude
 load formalChecks/conservation.maude
 load formalChecks/no-overflow.maude
+load formalChecks/system-verify.maude

@@ -1,0 +1,6 @@
+mod SYSTEM-VERIFY is
+  including MODEL-CHECKER .
+  including LTL-SIMPLIFIER .
+  protecting NO-OVERFLOW-VER .
+  protecting CONSERVATION-VER .
+endm

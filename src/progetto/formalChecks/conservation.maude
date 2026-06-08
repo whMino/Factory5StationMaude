@@ -4,7 +4,7 @@
 
 --- verifica con 'red in CONSERVATION : modelCheck(init, [] conserved) .' ---
 
-mod CONSERVATION-PREDS is
+mod CONSERVATION-VER is
   protecting SYSTEM .
   protecting VALIDATION .
   including SATISFACTION .
@@ -17,8 +17,8 @@ mod CONSERVATION-PREDS is
   eq C |= conserved = (countPallets(C) == 4) .
 endm
 
-mod CONSERVATION is
-  protecting CONSERVATION-PREDS .
+mod CONSERVATION is 
+  including CONSERVATION-VER .
   including MODEL-CHECKER .
   including LTL-SIMPLIFIER .
 endm
